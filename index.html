@@ -12,11 +12,23 @@
   </head>
   <body>
     <div class="card">
-      <div class="card-header bg-success">
-        <h5 class="card-title">Stock Items</h5>
+      <div class="card-header bg-success d-flex">
+        <div class="ml-auto">
+          <h5 class="card-title">Stock Items</h5>
+        </div>
+        <div class="mr-auto d-flex-grow-1">
+          <button class="btn btn-xs btn-sm btn-danger logger">
+            Log to console..
+          </button>
+        </div>
       </div>
       <div class="card-body p-0">
-        <table class="table table-hover table-bordered">
+        <template id="target-row-template">
+          <tr id="target-row">
+            <td contenteditable="true" class="paste-target">paste...</td>
+          </tr>
+        </template>
+        <table class="table table-hover table-bordered mb-0">
           <thead>
             <th>S.N</th>
             <th>Particular</th>
@@ -25,12 +37,8 @@
             <th>Discount</th>
           </thead>
           <tbody class="table-body">
-            <tr>
-              <td contenteditable="true" class="paste-target">-</td>
-              <td contenteditable="true" class="paste-target">-</td>
-              <td contenteditable="true" class="paste-target">-</td>
-              <td contenteditable="true" class="paste-target">-</td>
-              <td contenteditable="true" class="paste-target">-</td>
+            <tr id="target-row">
+              <td contenteditable="true" class="paste-target">paste...</td>
             </tr>
           </tbody>
         </table>
