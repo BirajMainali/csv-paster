@@ -34,6 +34,7 @@ const appendDataToTable = ({ headers, rows }) => {
 
 const getPasteDataArray = (event) => {
     const pasteData = event.clipboardData.getData('text/plain');
+    console.log(pasteData);
     let arr = pasteData.split('\n');
     let headers = Array.from(arr[0].split('\t'));
     const rows = arr.filter(row => row.length > 0)
