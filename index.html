@@ -11,7 +11,7 @@
     <title>Paste excel data to html table</title>
   </head>
   <body>
-    <div class="card">
+    <div class="card paste-target" contenteditable="true">
       <div
         class="card-header bg-warning d-flex"
         style="justify-content: space-between"
@@ -26,24 +26,11 @@
         </div>
       </div>
       <div class="card-body p-0">
-        <template id="target-row-template">
-          <tr id="target-row">
-            <td contenteditable="true" class="paste-target">paste...</td>
-          </tr>
-        </template>
         <table class="table table-hover table-bordered mb-0">
           <thead>
-            <th>S.N</th>
-            <th>Particular</th>
-            <th>Quantity</th>
-            <th>Rate</th>
-            <th>Discount</th>
+            <tr></tr>
           </thead>
-          <tbody class="table-body">
-            <tr id="target-row">
-              <td contenteditable="true" class="paste-target">paste...</td>
-            </tr>
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
     </div>
