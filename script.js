@@ -1,5 +1,6 @@
 const __ = document.querySelector.bind(document);
 const fragment = new DocumentFragment()
+const ADDED_HEADERS = [];
 
 const pasteTarget = __('.paste-target');
 pasteTarget.addEventListener('paste', (e) => {
@@ -12,10 +13,10 @@ const appendDataToTable = ({ headers, rows }) => {
     const body = __('tbody');
     const head = __('thead');
     headers.forEach(x => {
-        if (head.querySelector(`th[data-header="${x}"]`)) return;
+        if (ADDED_HEADERS.includes(x)) return;
         const tableHeaderElem = document.createElement('th');
         tableHeaderElem.innerText = x;
-        tableHeaderElem.dataset.header = x;
+        ADDED_HEADERS.push(x);
         head.append(tableHeaderElem);
     });
 
