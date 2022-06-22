@@ -12,13 +12,16 @@ pasteTarget.addEventListener('paste', (e) => {
 const appendDataToTable = ({ headers, rows }) => {
     const body = __('tbody');
     const head = __('thead');
+    const row = document.createElement("tr");
     headers.forEach(x => {
         if (ADDED_HEADERS.includes(x)) return;
-        const tableHeaderElem = document.createElement('th');
-        tableHeaderElem.innerText = x;
+        const tdElm = document.createElement('th');
+        tdElm.textContent = x;
+        tdElm.dataset.header = x;
         ADDED_HEADERS.push(x);
-        head.append(tableHeaderElem);
+        row.appendChild(tdElm);
     });
+    head.append(row);
 
     rows.forEach(row => {
         const cells = row.split('\t');
@@ -35,7 +38,6 @@ const appendDataToTable = ({ headers, rows }) => {
 
 const getPasteDataArray = (event) => {
     const pasteData = event.clipboardData.getData('text/plain');
-    console.log(pasteData);
     let arr = pasteData.split('\n');
     let headers = Array.from(arr[0].split('\t'));
     const rows = arr.filter(row => row.length > 0)
