@@ -2,13 +2,13 @@ document.addEventListener('paste', (ev) => {
     ev.preventDefault();
     if (!ev.target.closest("table")) return;
     let rows = document.querySelectorAll('table tbody tr');
-    const currentRow = ev.target.closest('tr');
+    const currentRow = ev.target.closest('tbody tr');
     const currentRowIndex = Array.from(rows).indexOf(currentRow);
     const currentCell = ev.target.closest('td');
     const currentCellIndex = Array.from(currentRow.children).indexOf(currentCell);
     rows = Array.from(rows).filter((row, index) => index >= currentRowIndex);
     const values = ev.clipboardData.getData("text/plain").split("\n").map(row => row.split('\t'));
-    for (let rowIdx = 0; rowIdx < values.length; rowIdx++) {
+    for (let rowIdx = 0; rowIdx < values.length ; rowIdx++) {
         if (rowIdx >= rows.length) {
             const newRow = currentRow.cloneNode(true);
             currentRow.parentNode.appendChild(newRow);
@@ -24,4 +24,9 @@ document.addEventListener('paste', (ev) => {
             input.value = value;
         }
     }
+});
+
+document.querySelector('.btn').addEventListener('click', (ev) => {
+    const inputs = document.querySelectorAll('table tbody tr td input');
+    inputs.forEach(input => input.value = '');
 });
