@@ -3,12 +3,18 @@
 csv paster is a library that allows to paste excel/csv format data into a html table on multiple input's such as normal
 input,checkbox,radio and select.
 
+packages: https://www.npmjs.com/package/csv-paster
+demo: https://birajmainali.github.io/csv-content-import/
+
 ## Preview
 https://www.loom.com/share/c6952f01cac34e7cbaf0b6fcd751835d
 
-## Setup
+## Basic Usage
+> npm i csv-paster
+> 
+> yarn add csv-paster
 
-To work with paster, we need to configure our table to tack the changes and make workable paster, steps are as follows
+- inject `import "csv-paster/csv-paster";`
 
 1. table must have id `csv`
 2. add data-header attribute on table header with corresponded object keys, after pasting the data paster dispatch
