@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BirajMainali/csv-content-import.git"
+    "url": "git+https://github.com/BirajMainali/csv-paster.git"
   },
   "keywords": [
     "paster",
@@ -22,7 +22,7 @@
   "author": "Biraj Mainali",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BirajMainali/csv-content-import/issues"
+    "url": "https://github.com/BirajMainali/csv-paster/issues"
   },
-  "homepage": "https://github.com/BirajMainali/csv-content-import#readme"
+  "homepage": "https://github.com/BirajMainali/csv-paster#readme"
 }
