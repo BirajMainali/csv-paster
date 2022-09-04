@@ -1,6 +1,6 @@
 {
   "name": "csv-paster",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "csv paster is a library that allows to paste excel/csv format data into a html table on multiple input's such as checkbox,radio and select.",
   "main": "csv-paster.js",
   "scripts": {
