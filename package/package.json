@@ -1,0 +1,28 @@
+{
+  "name": "csv-paster",
+  "version": "1.0.2",
+  "description": "csv paster is a library that allows to paste excel/csv format data into a html table on multiple input's such as checkbox,radio and select.",
+  "main": "csv-paster.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BirajMainali/csv-content-import.git"
+  },
+  "keywords": [
+    "paster",
+    "csv",
+    "paster",
+    "excel",
+    "paster",
+    "dynamic",
+    "paster"
+  ],
+  "author": "Biraj Mainali",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BirajMainali/csv-content-import/issues"
+  },
+  "homepage": "https://github.com/BirajMainali/csv-content-import#readme"
+}
