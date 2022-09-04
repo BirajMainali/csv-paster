@@ -1,74 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link
-      rel="stylesheet"
-      href="https://bootswatch.com/5/united/bootstrap.min.css"
+            rel="stylesheet"
+            href="https://bootswatch.com/5/united/bootstrap.min.css"
     />
     <title>Paste excel data to html table</title>
-  </head>
-  <body>
-    <div class="mx-auto col-8 mt-4 d-block">
-      <button class="btn btn-success btn-sm">Clear</button>
-      <table class="table table-sm table-bordered table-strriped">
+</head>
+<body>
+<div class="mx-auto col-8 mt-4 d-block">
+    <table class="table table-sm table-bordered table-strriped" id="csv">
         <thead class="bg-warning">
-          <tr>
-            <th>Barcode</th>
-            <th>Product</th>
-            <th>Unit</th>
-            <th>Quantity</th>
-            <th>Rate</th>
-            <th>NetAmount</th>
-          </tr>
+        <tr>
+            <th data-header="barcode">Barcode</th>
+            <th data-header="product">Product</th>
+            <th data-header="unit">Unit</th>
+            <th data-header="quantity">Quantity</th>
+            <th data-header="rate">Rate</th>
+            <th data-header="isDiscount">Discount</th>
+        </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
+        <tr>
+            <td class="watch">
+                <input type="text" class="form-control form-control-sm"/>
             </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
+            <td class="watch">
+                <select class="form-control form-control-sm">
+                    <option>Select Product</option>
+                    <option value="1">Item 1</option>
+                    <option value="2">Item 2</option>
+                    <option value="3">Item 3</option>
+                </select>
             </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
+            <td class="watch">
+                <input type="text" class="form-control form-control-sm"/>
             </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
+            <td class="watch">
+                <input type="text" class="form-control form-control-sm"/>
             </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
+            <td class="watch">
+                <input type="text" class="form-control form-control-sm"/>
             </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
+            <td class="watch">
+                <input type="checkbox" class="form-check-input" style="width: 2em !important; height: 1.5rem !important;"/>
             </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
-            </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
-            </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
-            </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
-            </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
-            </td>
-            <td>
-              <input type="text" class="form-control form-control-sm" />
-            </td>
-          </tr>
+        </tr>
         </tbody>
-      </table>
-    </div>
-    
-    <script src="./script.js"></script>
-  </body>
+    </table>
+</div>
+
+<script src="./script.js"></script>
+</body>
 </html>
