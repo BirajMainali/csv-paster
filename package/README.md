@@ -10,27 +10,29 @@ demo: https://birajmainali.github.io/csv-content-import/
 https://www.loom.com/share/c6952f01cac34e7cbaf0b6fcd751835d
 
 ## Basic Usage
-> npm i csv-paster
-> 
-> yarn add csv-paster
+> npm
+   ```npm
+   npm i csv-paster
+   ```
+> Yarn
+   ```yarn
+   yarn add csv-paster
+   ```
 
 - inject `import "csv-paster/csv-paster";`
 
 1. table must have id `csv`
-2. add data-header attribute on table header with corresponded object keys, after pasting the data paster dispatch
-   event `pasteComplete` with current table array for that we need to configure data-header.
+2. add data-header attribute on table header with corresponded object key, to get after pasting the data, paster dispatch the
+   event `pasteComplete` with lastest change table data object array, for that we need to add data-header.
 3. add class `skip-paste` to skip the paste.
-4. add class `watch` to get the updated rows by paster, if we missed class `watch` this does not tack the changes, for
-   e.g. we have an input field named barcode. if the barcode changed we need to find the latest paste item to fetch
-   product according to barcode, in this case we need to tack the newly updated barcode to fetch the product
+4. add class `watch` to get the updated rows from event, if we missed class `watch` this does not tack the changes occured by the lastest paste, for
+   e.g. we have an input field named barcode. if the barcode changed we might fetch product from server according to barcode, in this case we need to tack the newly updated barcode to fetch the product, in this case we need to track the newly updated barcode to fetch the product
 5. add class `watch` on `td` element we can ensure current row is watchable or not.
 
 ## Events
 
-While pasting the data from csv/excel to web table, we might need some events to make fruitfull dev experiance,
-After pasting the data paster dispatch event `pasteComplete` on `tableElem` with current table object, likely in some
-cases I found that we need to know, pasted row count before filling data into a table for that paster dispatch `onRows`
-event with the lenght of current rows.
+While pasting the data from csv/excel to web table, we might need some events, for that paster dispatch event `pasteComplete` on `tableElem` with current table objects, likely in some cases we might know the pasted row count before filling data into a table for that paster dispatch `onRows` event with the lenght of current rows.
+
 
 ## Usages
 
@@ -38,52 +40,7 @@ event with the lenght of current rows.
 
 ![img.png](img.png)
 
-### table Sample
-
-```html
-
-<table class="table table-sm table-bordered table-strriped" id="csv">
-    <thead class="bg-warning">
-    <tr>
-        <th data-header="barcode">Barcode</th>
-        <th data-header="product">Product</th>
-        <th data-header="unit">Unit</th>
-        <th data-header="quantity">Quantity</th>
-        <th data-header="rate">Rate</th>
-        <th data-header="isDiscount">Discount</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td class="watch">
-            <input type="text" class="form-control form-control-sm"/>
-        </td>
-        <td class="watch">
-            <select class="form-control form-control-sm">
-                <option>Select Product</option>
-                <option value="1">Item 1</option>
-                <option value="2">Item 2</option>
-                <option value="3">Item 3</option>
-            </select>
-        </td>
-        <td class="watch">
-            <input type="text" class="form-control form-control-sm"/>
-        </td>
-        <td class="watch">
-            <input type="text" class="form-control form-control-sm"/>
-        </td>
-        <td class="watch">
-            <input type="text" class="form-control form-control-sm"/>
-        </td>
-        <td class="watch">
-            <input type="checkbox" class="form-check-input" style="width: 2em !important; height: 1.5rem !important;"/>
-        </td>
-    </tr>
-    </tbody>
-</table>
-```
-
-Event handling for watched changes
+Event listning on paste complete
 
 ```js
 document.addEventListener('DOMContentLoaded', () => {
@@ -98,14 +55,6 @@ event details/response array
 
 ```json
 [
-  {
-    "barcode": "Barcode",
-    "product": "",
-    "unit": "Unit",
-    "quantity": "Quantity",
-    "rate": "Rate",
-    "isDiscount": "false"
-  },
   {
     "barcode": "90239209302",
     "product": "1",

@@ -52,7 +52,6 @@ const getRow = (currentElem) => {
 
 const dispatchEvent = (elem, eventName, data) => {
     if (!data) return;
-    console.log(data);
     const event = new CustomEvent(eventName, {
         bubbles: true,
         detail: data,
