@@ -3,8 +3,9 @@
 csv paster is a library that allows to paste excel/csv format data into a html table on multiple input's such as normal
 input,checkbox,radio and select.
 
-packages: https://www.npmjs.com/package/csv-paster
-demo: https://birajmainali.github.io/csv-content-import/
+Packages: https://www.npmjs.com/package/csv-paster
+
+Demo: https://birajmainali.github.io/csv-paster/
 
 ## Preview
 https://www.loom.com/share/c6952f01cac34e7cbaf0b6fcd751835d
@@ -40,7 +41,7 @@ While pasting the data from csv/excel to web table, we might need some events, f
 
 ![img.png](img.png)
 
-Event listning on paste complete
+Event listening on paste complete
 
 ```js
 document.addEventListener('DOMContentLoaded', () => {
@@ -51,18 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 ```
 
-event details/response array
+event data
 
 ```json
 [
-  {
-    "barcode": "90239209302",
-    "product": "1",
-    "unit": "Pcs",
-    "quantity": "10",
-    "rate": "150",
-    "isDiscount": "true"
-  }
+   {
+      "barcode": "90239209302",
+      "product": "1",
+      "unit": "Pcs",
+      "quantity": "10",
+      "rate": "150",
+      "isDiscount": "true"
+   }
 ]
 ```
 
