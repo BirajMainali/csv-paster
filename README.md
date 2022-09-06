@@ -11,6 +11,9 @@ Demo: https://birajmainali.github.io/csv-paster/
 https://www.loom.com/share/c6952f01cac34e7cbaf0b6fcd751835d
 
 ## Basic Usage
+> CDN
+>  https://cdn.jsdelivr.net/npm/csv-paster@1.0.7/csv-paster.min.js
+
 > npm
    ```npm
    npm i csv-paster
@@ -45,10 +48,10 @@ Event listening on paste complete
 
 ```js
 document.addEventListener('DOMContentLoaded', () => {
-    const tabeleElem = document.querySelector('#csv');
-    tabeleElem.addEventListener('pasteComplete', (ev) => {
-        console.log(ev.detail);
-    });
+   const tabeleElem = document.querySelector('#csv');
+   tabeleElem.addEventListener('pasteComplete', (ev) => {
+      console.log(ev.detail);
+   });
 })
 ```
 
