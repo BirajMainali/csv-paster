@@ -8,6 +8,7 @@ const getclipboardDataValues = (ev) => {
 
 const getSerialized = (tableElem) => {
     const rows = Array.from(tableElem.querySelectorAll('tbody tr')).filter(row => row.dataset.trace === CURRENT_TRACE);
+    if (!rows.length) return;
     const tableHeaders = Array.from(tableElem.querySelectorAll('th')).map(x => x.dataset.header).filter(x => x);
     return Array.from(rows).map(row => {
         const cells = Array.from(row.querySelectorAll('td')).filter(x => x.querySelector('input') || x.querySelector('select'));
@@ -57,7 +58,9 @@ document.addEventListener('paste', (ev) => {
     const tableElem = ev.target.closest('#csv');
     if (!tableElem) return;
     const csvFormattedValues = getclipboardDataValues(ev);
-    dispatchEvent(tableElem, 'onRows', csvFormattedValues.length);
+    setTimeout(() => {
+        dispatchEvent(tableElem, 'onRows', csvFormattedValues.length);
+    }, 0);
     setTimeout(() => {
         CURRENT_TRACE = Math.random().toString(36).substring(7);
         let rows = document.querySelectorAll('#csv tbody tr');
@@ -76,5 +79,5 @@ document.addEventListener('paste', (ev) => {
             }
         }
         dispatchEvent(tableElem, 'pasteComplete', getSerialized(tableElem));
-    }, 100);
+    })
 });
