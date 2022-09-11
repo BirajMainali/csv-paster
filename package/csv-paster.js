@@ -54,9 +54,9 @@ const dispatchEvent = (elem, eventName, data) => {
 };
 
 document.addEventListener('paste', (ev) => {
-    ev.preventDefault();
     const tableElem = ev.target.closest('#csv');
     if (!tableElem) return;
+    ev.preventDefault();
     const csvFormattedValues = getclipboardDataValues(ev);
     setTimeout(() => {
         dispatchEvent(tableElem, 'onRows', csvFormattedValues.length);
