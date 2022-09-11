@@ -6,7 +6,6 @@ const getclipboardDataValues = (ev) => {
     return values;
 }
 
-
 const getSerialized = (tableElem) => {
     const rows = Array.from(tableElem.querySelectorAll('tbody tr')).filter(row => row.dataset.trace === CURRENT_TRACE);
     const tableHeaders = Array.from(tableElem.querySelectorAll('th')).map(x => x.dataset.header).filter(x => x);
@@ -31,8 +30,8 @@ const setCurrentValue = (currentElem, data) => {
     inputElem = currentElem.querySelector('input');
     if (inputElem) {
         if (inputElem.type === 'checkbox' || inputElem.type === 'radio') {
-            inputElem.checked = (data == 1);
-            inputElem.value = (data == 1);
+            inputElem.checked = (data === 1 || data);
+            inputElem.value = (data === 1 || data);
         } else {
             inputElem.value = data;
         }
@@ -42,12 +41,6 @@ const setCurrentValue = (currentElem, data) => {
     }
     if (!inputElem.closest('td').classList.contains('watch')) return;
     inputElem.closest('tr').dataset.trace = CURRENT_TRACE;
-}
-
-const getRow = (currentElem) => {
-    const newRow = currentElem.cloneNode(true);
-    currentElem.parentNode.appendChild(newRow);
-    return newRow;
 }
 
 const dispatchEvent = (elem, eventName, data) => {
@@ -74,7 +67,6 @@ document.addEventListener('paste', (ev) => {
         const currentCellIndex = Array.from(currentRow.children).indexOf(currentCell);
         rows = Array.from(rows).filter((row, index) => index >= currentRowIndex);
         for (let rowIdx = 0; rowIdx < csvFormattedValues.length; rowIdx++) {
-            if (rowIdx >= rows.length) rows.push(getRow(currentRow));
             let cells = Array.from(rows[rowIdx].cells).filter((cell, cellIdx) => cellIdx >= currentCellIndex);
             cells = Array.from(cells).filter(cell => !cell.classList.contains('skip-paste'));
             for (let cellIdx = 0; cellIdx < cells.length; cellIdx++) {
@@ -84,5 +76,5 @@ document.addEventListener('paste', (ev) => {
             }
         }
         dispatchEvent(tableElem, 'pasteComplete', getSerialized(tableElem));
-    }, 0);
+    }, 100);
 });
