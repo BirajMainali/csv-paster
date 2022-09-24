@@ -10,9 +10,7 @@ Demo: https://birajmainali.github.io/csv-paster/
 ## Preview
 https://www.loom.com/share/c6952f01cac34e7cbaf0b6fcd751835d
 
-## Basic Usage
-> CDN
->  https://cdn.jsdelivr.net/npm/csv-paster@1.0.7/csv-paster.min.js
+## Installation
 
 > npm
    ```npm
@@ -28,23 +26,49 @@ https://www.loom.com/share/c6952f01cac34e7cbaf0b6fcd751835d
 1. table must have id `csv`
 2. add data-header attribute on table header with corresponded object key, to get after pasting the data, paster dispatch the
    event `pasteComplete` with lastest change table data object array, for that we need to add data-header.
+
+#### Example for header  configuration
+````html
+<thead class="bg-warning">
+      <tr>
+      <th data-header="barcode">Barcode</th>
+      <th data-header="product">Product</th>
+      <th data-header="unit">Unit</th>
+      <th data-header="quantity">Quantity</th>
+      <th data-header="rate">Rate</th>
+      <th data-header="Discount">Discount</th>
+      </tr>
+   </thead>
+````
+
+#### Estimated Result.
+```json
+[
+   {
+      "barcode": "90239209302",
+      "product": "1",
+      "unit": "Pcs",
+      "quantity": "10",
+      "rate": "150",
+      "Discount": "30"
+   }
+]
+```
+
 3. add class `skip-paste` to skip the paste.
 4. add class `watch` to get the updated rows from event, if we missed class `watch` this does not tack the changes occured by the lastest paste, for
    e.g. we have an input field named barcode. if the barcode changed we might fetch product from server according to barcode, in this case we need to tack the newly updated barcode to fetch the product, in this case we need to track the newly updated barcode to fetch the product
 5. add class `watch` on `td` element we can ensure current row is watchable or not.
 
-## Events
 
-While pasting the data from csv/excel to web table, we might need some events, for that paster dispatch event `pasteComplete` on `tableElem` with current table objects, likely in some cases we might know the pasted row count before filling data into a table for that paster dispatch `onRows` event with the lenght of current rows.
+## Custom Helping Events
+1. `OnRows`, This event fired when the users paste the csv content into a table. In some cases initially table may not have a avliable rows to paste. so we need handle rows by catching this event manually.
+
+2. `pasteComplete`, This event after pasting the data. this gives the lastest changed paste content. to track the latest change we need to add class `watch` otherwise paster just paste the without providing the changes.
+
 
 
 ## Usages
-
-### excel sample
-
-![img.png](img.png)
-
-Event listening on paste complete
 
 ```js
 const __ = document.querySelector.bind(document);
