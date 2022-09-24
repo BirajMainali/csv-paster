@@ -53,15 +53,18 @@ const dispatchEvent = (elem, eventName, data) => {
     elem.dispatchEvent(event);
 };
 
-document.addEventListener('paste', (ev) => {
+document.addEventListener('paste', async (ev) => {
     const tableElem = ev.target.closest('#csv');
     if (!tableElem) return;
     ev.preventDefault();
     const csvFormattedValues = getclipboardDataValues(ev);
-    setTimeout(() => {
+
+    await new Promise((resolve) => {
         dispatchEvent(tableElem, 'onRows', csvFormattedValues.length);
-    }, 0);
-    setTimeout(() => {
+        resolve();
+    });
+
+    await new Promise(resolve => {
         CURRENT_TRACE = Math.random().toString(36).substring(7);
         let rows = document.querySelectorAll('#csv tbody tr');
         const currentRow = ev.target.closest('tbody tr');
@@ -79,5 +82,6 @@ document.addEventListener('paste', (ev) => {
             }
         }
         dispatchEvent(tableElem, 'pasteComplete', getSerialized(tableElem));
-    })
+        resolve();
+    });
 });

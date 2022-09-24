@@ -1,62 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-            rel="stylesheet"
-            href="https://bootswatch.com/5/united/bootstrap.min.css"
+      rel="stylesheet"
+      href="https://bootswatch.com/5/united/bootstrap.min.css"
     />
     <title>Paste excel data to html table</title>
-</head>
-<body>
-<div class="mx-auto col-8 mt-4 d-block">
-    <table class="table table-sm table-bordered table-strriped" id="csv">
+  </head>
+  <body>
+    <div class="mx-auto col-8 mt-4 d-block">
+      <table class="table table-sm table-bordered table-strriped" id="csv">
         <thead class="bg-warning">
-        <tr>
+          <tr>
             <th data-header="barcode">Barcode</th>
             <th data-header="product">Product</th>
             <th data-header="unit">Unit</th>
             <th data-header="quantity">Quantity</th>
             <th data-header="rate">Rate</th>
             <th data-header="isDiscount">Discount</th>
-        </tr>
+          </tr>
         </thead>
-        <tbody>
+        <tbody></tbody>
+      </table>
+      <hr />
+      <var id="preview" class="align-item-center"> </var>
+      <template id="rowTemplate">
         <tr>
-            <td class="watch">
-                <input type="text" class="form-control form-control-sm"/>
-            </td>
-            <td class="watch">
-                <select class="form-control form-control-sm">
-                    <option>Select Product</option>
-                    <option value="1">Item 1</option>
-                    <option value="2">Item 2</option>
-                    <option value="3">Item 3</option>
-                </select>
-            </td>
-            <td class="watch">
-                <input type="text" class="form-control form-control-sm"/>
-            </td>
-            <td class="watch">
-                <input type="text" class="form-control form-control-sm"/>
-            </td>
-            <td class="watch">
-                <input type="text" class="form-control form-control-sm"/>
-            </td>
-            <td class="watch">
-                <input type="checkbox" class="form-check-input" style="width: 2em !important; height: 1.5rem !important;"/>
-            </td>
+          <td class="watch">
+            <input type="text" class="form-control form-control-sm" />
+          </td>
+          <td class="watch">
+            <select class="form-control form-control-sm">
+              <option>Select Product</option>
+              <option value="1">Item 1</option>
+              <option value="2">Item 2</option>
+              <option value="3">Item 3</option>
+            </select>
+          </td>
+          <td class="watch">
+            <input type="text" class="form-control form-control-sm" />
+          </td>
+          <td class="watch">
+            <input type="text" class="form-control form-control-sm" />
+          </td>
+          <td class="watch">
+            <input type="text" class="form-control form-control-sm" />
+          </td>
+          <td class="watch">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              style="width: 2em !important; height: 1.5rem !important"
+            />
+          </td>
         </tr>
-        </tbody>
-    </table>
-    <hr>
-    <var id="preview" class="align-item-center">
+      </template>
+    </div>
 
-    </var>
-</div>
-
-<script src="package/csv-paster.js"></script>
-</body>
+    <script src="package/csv-paster.js"></script>
+    <script src="./script.js"></script>
+  </body>
 </html>

@@ -47,26 +47,27 @@ While pasting the data from csv/excel to web table, we might need some events, f
 Event listening on paste complete
 
 ```js
-document.addEventListener('DOMContentLoaded', () => {
-   const tabeleElem = document.querySelector('#csv');
-   tabeleElem.addEventListener('pasteComplete', (ev) => {
-      console.log(ev.detail);
-   });
-})
-```
+const __ = document.querySelector.bind(document);
+const tableElem = __('#csv');
 
-event data
 
-```json
-[
-   {
-      "barcode": "90239209302",
-      "product": "1",
-      "unit": "Pcs",
-      "quantity": "10",
-      "rate": "150",
-      "isDiscount": "true"
-   }
-]
-```
+document.addEventListener("DOMContentLoaded", cloneRow);
 
+// this event gives the row count of pasting item, so that we can manage the unavailable rows like below.
+tableElem.addEventListener("onRows", async (ev) => {
+    for (let i = 0; i < ev.detail; i++) {
+        cloneRow();
+    }
+});
+
+// This event gives the latest change items, which is indicated by the watch
+tableElem.addEventListener("pasteComplete", (ev) => {
+    console.log(ev.detail);
+});
+
+function cloneRow() {
+    const rowTemplate = __("#rowTemplate");
+    const tbody = __("tbody");
+    const row = rowTemplate.content.cloneNode(true);
+    tbody.appendChild(row);
+};
