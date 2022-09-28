@@ -1,6 +1,16 @@
 let CURRENT_TRACE = null;
 
-const getclipboardDataValues = (ev) => {
+const classConstants = Object.freeze({
+    watch: 'watch',
+    skipPaste: 'skip-paste',
+});
+
+const eventsConstants = Object.freeze({
+    onRows: 'onRows',
+    pasteComplete: 'pasteComplete',
+});
+
+const getclipboardData = (ev) => {
     const values = ev.clipboardData.getData("text/plain").split("\n").map(row => row.split('\t'));
     values.splice(values.length - 1, 0);
     return values;
@@ -31,8 +41,7 @@ const setCurrentValue = (currentElem, data) => {
     inputElem = currentElem.querySelector('input');
     if (inputElem) {
         if (inputElem.type === 'checkbox' || inputElem.type === 'radio') {
-            inputElem.checked = (data === 1 || data);
-            inputElem.value = (data === 1 || data);
+            [inputElem.checked, inputElem.value] = [!!data];
         } else {
             inputElem.value = data;
         }
@@ -40,7 +49,9 @@ const setCurrentValue = (currentElem, data) => {
         inputElem = currentElem.querySelector('select');
         if (inputElem) inputElem.value = data;
     }
-    if (!inputElem.closest('td').classList.contains('watch')) return;
+    inputElem.dispatchEvent(new Event('change', { bubbles: true }));
+    inputElem.dispatchEvent(new Event('input', { bubbles: true }));
+    if (!inputElem.closest('td').classList.contains(classConstants.watch)) return;
     inputElem.closest('tr').dataset.trace = CURRENT_TRACE;
 }
 
@@ -57,31 +68,35 @@ document.addEventListener('paste', async (ev) => {
     const tableElem = ev.target.closest('#csv');
     if (!tableElem) return;
     ev.preventDefault();
-    const csvFormattedValues = getclipboardDataValues(ev);
+    const data = getclipboardData(ev);
+    await dispatchonRows(tableElem, data.length);
+    fillInputs(ev, data);
+    dispatchEvent(tableElem, eventsConstants.pasteComplete, getSerialized(tableElem));
 
-    await new Promise((resolve) => {
-        dispatchEvent(tableElem, 'onRows', csvFormattedValues.length);
-        resolve();
-    });
-
-    await new Promise(resolve => {
-        CURRENT_TRACE = Math.random().toString(36).substring(7);
-        let rows = document.querySelectorAll('#csv tbody tr');
-        const currentRow = ev.target.closest('tbody tr');
-        const currentRowIndex = Array.from(rows).indexOf(currentRow);
-        const currentCell = ev.target.closest('td');
-        const currentCellIndex = Array.from(currentRow.children).indexOf(currentCell);
-        rows = Array.from(rows).filter((row, index) => index >= currentRowIndex);
-        for (let rowIdx = 0; rowIdx < csvFormattedValues.length; rowIdx++) {
-            let cells = Array.from(rows[rowIdx].cells).filter((cell, cellIdx) => cellIdx >= currentCellIndex);
-            cells = Array.from(cells).filter(cell => !cell.classList.contains('skip-paste'));
-            for (let cellIdx = 0; cellIdx < cells.length; cellIdx++) {
-                const value = csvFormattedValues[rowIdx][cellIdx];
-                if (!value) continue;
-                setCurrentValue(cells[cellIdx], value);
-            }
-        }
-        dispatchEvent(tableElem, 'pasteComplete', getSerialized(tableElem));
-        resolve();
-    });
 });
+
+async function dispatchonRows(tableElem, rowsCount) {
+    await new Promise((resolve) => {
+        dispatchEvent(tableElem, eventsConstants.onRows, rowsCount);
+        resolve();
+    });
+}
+
+function fillInputs(ev, clipboardData) {
+    CURRENT_TRACE = Math.random().toString(36).substring(7);
+    let rows = document.querySelectorAll('#csv tbody tr');
+    const currentRow = ev.target.closest('tbody tr');
+    const currentRowIndex = Array.from(rows).indexOf(currentRow);
+    const currentCell = ev.target.closest('td');
+    const currentCellIndex = Array.from(currentRow.children).indexOf(currentCell);
+    rows = Array.from(rows).filter((row, index) => index >= currentRowIndex);
+    for (let rowIdx = 0; rowIdx < clipboardData.length; rowIdx++) {
+        let cells = Array.from(rows[rowIdx].cells).filter((cell, cellIdx) => cellIdx >= currentCellIndex);
+        cells = Array.from(cells).filter(cell => !cell.classList.contains(classConstants.skipPaste));
+        for (let cellIdx = 0; cellIdx < cells.length; cellIdx++) {
+            const value = clipboardData[rowIdx][cellIdx];
+            if (!value) continue;
+            setCurrentValue(cells[cellIdx], value);
+        }
+    }
+}
