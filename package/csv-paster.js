@@ -11,7 +11,13 @@ const eventsConstants = Object.freeze({
 });
 
 const getclipboardData = (ev) => {
-    const values = ev.clipboardData.getData("text/plain").split("\n").map(row => row.split('\t'));
+    let values = ev.clipboardData.getData("text/plain");
+
+    if(!values.includes("\t") && !values.includes("\n")) {
+        return [];
+    }
+
+    values = values.split("\n").map(row => row.split('\t'));
     values.splice(values.length - 1, 0);
     return values;
 }
@@ -25,7 +31,9 @@ const getSerialized = (tableElem) => {
         return cells.reduce((acc, cur, index) => {
             acc[tableHeaders[index]] = getCurrentValue(cur);
             return acc;
-        }, {})
+        }, {
+            idx: row.rowIndex - 1
+        })
     })
 }
 
@@ -56,6 +64,7 @@ const setCurrentValue = (currentElem, data) => {
 }
 
 const dispatchEvent = (elem, eventName, data) => {
+    console.log(data);
     if (!data) return;
     const event = new CustomEvent(eventName, {
         bubbles: true,
@@ -67,10 +76,10 @@ const dispatchEvent = (elem, eventName, data) => {
 document.addEventListener('paste', async (ev) => {
     const tableElem = ev.target.closest('#csv');
     if (!tableElem) return;
-    ev.preventDefault();
     const data = getclipboardData(ev);
-    await dispatchonRows(tableElem, data.length);
-    fillInputs(ev, data);
+    if(data.length === 0) return;
+    ev.preventDefault();
+    await fillInputs(ev, data, tableElem);
     dispatchEvent(tableElem, eventsConstants.pasteComplete, getSerialized(tableElem));
 
 });
@@ -82,14 +91,22 @@ async function dispatchonRows(tableElem, rowsCount) {
     });
 }
 
-function fillInputs(ev, clipboardData) {
+async function fillInputs(ev, clipboardData, tableElem) {
     CURRENT_TRACE = Math.random().toString(36).substring(7);
     let rows = document.querySelectorAll('#csv tbody tr');
     const currentRow = ev.target.closest('tbody tr');
     const currentRowIndex = Array.from(rows).indexOf(currentRow);
     const currentCell = ev.target.closest('td');
     const currentCellIndex = Array.from(currentRow.children).indexOf(currentCell);
+
+    if(clipboardData.length + currentRowIndex > tableElem.rows.length - 1) {
+        await dispatchonRows(tableElem, clipboardData.length + currentRowIndex + 1 - tableElem.rows.length);
+    }
+
+    rows = document.querySelectorAll('#csv tbody tr');
+
     rows = Array.from(rows).filter((row, index) => index >= currentRowIndex);
+
     for (let rowIdx = 0; rowIdx < clipboardData.length; rowIdx++) {
         let cells = Array.from(rows[rowIdx].cells).filter((cell, cellIdx) => cellIdx >= currentCellIndex);
         cells = Array.from(cells).filter(cell => !cell.classList.contains(classConstants.skipPaste));
