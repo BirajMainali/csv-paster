@@ -64,7 +64,6 @@ const setCurrentValue = (currentElem, data) => {
 }
 
 const dispatchEvent = (elem, eventName, data) => {
-    console.log(data);
     if (!data) return;
     const event = new CustomEvent(eventName, {
         bubbles: true,
