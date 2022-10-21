@@ -57,9 +57,12 @@ const setCurrentValue = (currentElem, data) => {
         inputElem = currentElem.querySelector('select');
         if (inputElem) inputElem.value = data;
     }
-    inputElem.dispatchEvent(new Event('change', { bubbles: true }));
-    inputElem.dispatchEvent(new Event('input', { bubbles: true }));
-    if (!inputElem.closest('td').classList.contains(classConstants.watch)) return;
+
+    if (!inputElem.closest('td').classList.contains(classConstants.watch)) {
+        inputElem.dispatchEvent(new Event('change', { bubbles: true }));
+        inputElem.dispatchEvent(new Event('input', { bubbles: true }));
+        return;
+    }
     inputElem.closest('tr').dataset.trace = CURRENT_TRACE;
 }
 
