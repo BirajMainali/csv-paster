@@ -1,6 +1,7 @@
+![Csv Paster Icon](CsvPasterIcon.png)
 # CSV Paster
 
-csv paster is a library that allows to paste excel/csv format data into a html table on multiple input's such as normal
+Csv paster is a library that allows to paste excel/csv format data into a html table on multiple input's such as normal
 input,checkbox,radio and select.
 
 Packages: https://www.npmjs.com/package/csv-paster
