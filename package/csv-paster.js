@@ -39,9 +39,25 @@ const getSerialized = (tableElem) => {
 
 const getCurrentValue = (currElem) => {
     const input = currElem.querySelector('input');
-    if (input) return input.value;
+    if (input) {
+        if(input.type === 'checkbox') return input.checked;
+        else return input.value;
+    }
     const selectElem = currElem.querySelector('select');
     if (selectElem) return selectElem.value;
+}
+
+function GetTruthyValue(value) {
+    if(typeof value === 'boolean') return value;
+    else if(typeof value === 'number') return !(value === 0);
+    else if(typeof value === 'undefined') return false;
+    else if (typeof value === 'string') {
+        value = value.trim();
+        if(value.toLowerCase() === 'true') return true;
+        else if(value.toLowerCase() === 'false') return false;
+        else if(value === '0') return false;
+        else return true;
+    }
 }
 
 const setCurrentValue = (currentElem, data) => {
@@ -49,7 +65,7 @@ const setCurrentValue = (currentElem, data) => {
     inputElem = currentElem.querySelector('input');
     if (inputElem) {
         if (inputElem.type === 'checkbox' || inputElem.type === 'radio') {
-            [inputElem.checked, inputElem.value] = [!!data];
+            inputElem.checked = GetTruthyValue(data);
         } else {
             inputElem.value = data;
         }
@@ -114,7 +130,7 @@ async function fillInputs(ev, clipboardData, tableElem) {
         cells = Array.from(cells).filter(cell => !cell.classList.contains(classConstants.skipPaste));
         for (let cellIdx = 0; cellIdx < cells.length; cellIdx++) {
             const value = clipboardData[rowIdx][cellIdx];
-            if (!value) continue;
+            if(typeof value === "undefined") continue;
             setCurrentValue(cells[cellIdx], value);
         }
     }
